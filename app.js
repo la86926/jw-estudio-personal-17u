@@ -8,6 +8,33 @@
   let z = 300;
   let activeItem = null;
 
+  if (Array.isArray(SECTIONS)) {
+    if (SECTIONS[6]) SECTIONS[6].title = 'Discurso · Cómo recuperar la paz en la familia';
+    if (SECTIONS[9]) SECTIONS[9].title = 'Video musical · Tú vales más que los gorriones';
+  }
+
+  const musicLayoutFix = document.createElement('style');
+  musicLayoutFix.textContent = `
+    .music-beats>div{
+      grid-template-columns:minmax(0,1fr);
+      gap:4px;
+      min-width:0;
+    }
+    .music-beats span,
+    .music-beats p{
+      min-width:0;
+      max-width:100%;
+      overflow-wrap:anywhere;
+    }
+    @media (min-width:600px){
+      .music-beats>div{
+        grid-template-columns:86px minmax(0,1fr);
+        gap:10px;
+      }
+    }
+  `;
+  document.head.appendChild(musicLayoutFix);
+
   const esc = value => String(value)
     .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
     .replaceAll('"','&quot;').replaceAll("'",'&#039;');
