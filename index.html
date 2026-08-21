@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#f7f7fa">
+<title>Protejamos nuestra familia — Estudio personal</title>
+<style>
+:root{
+  --bg:#f7f7fa; --surface:rgba(255,255,255,.78); --surface-solid:#fff; --text:#1d1d1f;
+  --muted:#6e6e73; --line:rgba(29,29,31,.09); --blue:#dceeff; --blue-strong:#4c86b9;
+  --mint:#dff4e9; --mint-strong:#4e8c70; --lilac:#eee5fb; --lilac-strong:#8062a7;
+  --amber:#fff0cf; --amber-strong:#a77528; --rose:#f8e3e8; --rose-strong:#a55f71;
+  --shadow:0 12px 38px rgba(0,0,0,.055); --radius:24px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Segoe UI",sans-serif;
+  background:
+    radial-gradient(circle at 8% 3%,rgba(210,232,255,.62),transparent 24rem),
+    radial-gradient(circle at 92% 22%,rgba(231,222,249,.52),transparent 23rem),
+    radial-gradient(circle at 50% 75%,rgba(221,244,233,.40),transparent 30rem),
+    var(--bg);
+  line-height:1.58; -webkit-font-smoothing:antialiased;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+.topbar{
+  position:sticky; top:0; z-index:30;
+  background:rgba(247,247,250,.78); backdrop-filter:blur(22px) saturate(150%);
+  -webkit-backdrop-filter:blur(22px) saturate(150%);
+  border-bottom:1px solid var(--line);
+}
+.navwrap{max-width:1180px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:14px}
+.brand{font-size:14px;font-weight:760;letter-spacing:-.01em;white-space:nowrap}
+.navscroll{display:flex;gap:7px;overflow:auto;scrollbar-width:none;padding:1px}
+.navscroll::-webkit-scrollbar{display:none}
+.navbtn{
+  border:0;background:rgba(255,255,255,.7);color:#5c5c63;border-radius:999px;padding:8px 12px;
+  font-size:12px;white-space:nowrap;box-shadow:inset 0 0 0 1px rgba(29,29,31,.06);
+  transition:transform .3s ease,background .3s ease,color .3s ease;
+}
+.navbtn:hover,.navbtn.active{background:#1d1d1f;color:#fff;transform:translateY(-1px)}
+main{max-width:1180px;margin:auto;padding:34px 18px 80px}
+.hero{
+  min-height:430px;position:relative;overflow:hidden;border-radius:34px;padding:54px clamp(24px,5vw,64px);
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);align-items:center;gap:32px;
+  background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,255,255,.62));
+  border:1px solid rgba(255,255,255,.95);box-shadow:var(--shadow);
+}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none}
+.hero:before{width:340px;height:340px;right:-110px;top:-130px;background:linear-gradient(135deg,#d8efff,#efe5fb)}
+.hero:after{width:250px;height:250px;right:210px;bottom:-170px;background:linear-gradient(135deg,#dff4e9,#fff0cf)}
+.eyebrow{font-size:12px;font-weight:760;text-transform:uppercase;letter-spacing:.13em;color:#6e6e73}
+h1{font-size:clamp(42px,6vw,76px);line-height:.99;letter-spacing:-.055em;margin:13px 0 20px;max-width:770px}
+.hero p{font-size:clamp(17px,2vw,21px);color:#515158;max-width:700px;margin:0}
+.hero-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+.pill{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.73);border:1px solid var(--line);font-size:12px;font-weight:680}
+.hero-art{position:relative;min-height:280px;z-index:1}
+.orbit{position:absolute;border-radius:50%;border:1px solid rgba(29,29,31,.10)}
+.orbit.o1{width:258px;height:258px;right:15px;top:9px}
+.orbit.o2{width:192px;height:192px;right:48px;top:42px}
+.core{position:absolute;right:90px;top:85px;width:108px;height:108px;border-radius:30px;background:#fff;box-shadow:0 18px 55px rgba(83,96,116,.16);display:grid;place-items:center;font-size:42px}
+.floatcard{position:absolute;background:rgba(255,255,255,.78);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.95);box-shadow:0 10px 28px rgba(0,0,0,.07);padding:11px 14px;border-radius:16px;font-size:12px;font-weight:720}
+.fc1{right:205px;top:38px}.fc2{right:0;top:142px}.fc3{right:190px;bottom:28px}
+.section{scroll-margin-top:76px;margin-top:76px}
+.section-head{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:end;margin-bottom:22px}
+.kicker{font-size:12px;font-weight:760;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h2{font-size:clamp(30px,4vw,48px);line-height:1.06;letter-spacing:-.04em;margin:7px 0 0}
+.time{font-size:12px;color:var(--muted);background:rgba(255,255,255,.68);padding:7px 10px;border-radius:999px;border:1px solid var(--line)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{
+  background:var(--surface);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.88);box-shadow:var(--shadow);border-radius:var(--radius);padding:24px;
+}
+.card h3{font-size:19px;letter-spacing:-.025em;margin:0 0 8px}
+.card p{margin:0;color:#55555c}
+.accent-blue{background:linear-gradient(145deg,rgba(220,238,255,.85),rgba(255,255,255,.76))}
+.accent-mint{background:linear-gradient(145deg,rgba(223,244,233,.88),rgba(255,255,255,.76))}
+.accent-lilac{background:linear-gradient(145deg,rgba(238,229,251,.9),rgba(255,255,255,.76))}
+.accent-amber{background:linear-gradient(145deg,rgba(255,240,207,.9),rgba(255,255,255,.76))}
+.accent-rose{background:linear-gradient(145deg,rgba(248,227,232,.9),rgba(255,255,255,.76))}
+.summary{font-size:17px;padding:28px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:stretch}
+.flow-item{position:relative;padding:22px 18px;border-radius:20px;background:rgba(255,255,255,.72);border:1px solid var(--line);min-height:148px}
+.flow-item:not(:last-child):after{content:"→";position:absolute;right:-17px;top:50%;transform:translateY(-50%);z-index:2;color:#999;font-size:22px}
+.flow-num{font-size:11px;font-weight:800;color:var(--muted)}
+.flow-title{font-weight:780;margin:7px 0 5px}
+.flow-desc{font-size:13px;color:var(--muted)}
+.scriptures{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.verse-chip{
+  border:0;border-radius:999px;padding:8px 11px;font-size:12px;font-weight:720;color:#345d7e;background:#e7f3ff;
+  transition:transform .3s ease,box-shadow .3s ease;
+}
+.verse-chip:nth-child(3n+2){background:#e9f6ef;color:#3d755a}
+.verse-chip:nth-child(3n+3){background:#f1eafa;color:#765798}
+.verse-chip:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.07)}
+.quote{font-size:25px;line-height:1.28;letter-spacing:-.025em;margin:0}
+.quote small{display:block;margin-top:16px;font-size:12px;letter-spacing:0;color:var(--muted)}
+.flipgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.flip{min-height:170px;perspective:900px}
+.flip button{width:100%;height:100%;border:0;background:transparent;padding:0;text-align:left}
+.flip-inner{position:relative;width:100%;height:100%;min-height:170px;transition:transform .55s ease;transform-style:preserve-3d}
+.flip.is-flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:19px;padding:20px;border:1px solid var(--line);background:rgba(255,255,255,.78)}
+.flip-back{transform:rotateY(180deg);background:#1d1d1f;color:#fff}
+.flip-face .label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:760;color:var(--muted)}
+.flip-back .label{color:#a8a8ad}
+.flip-face strong{display:block;margin-top:14px;font-size:17px;line-height:1.3}
+.flip-back p{color:#eee;font-size:14px;margin-top:10px}
+.planner{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}
+.choice-group{margin-top:17px}
+.choice-title{font-size:12px;font-weight:760;color:var(--muted);margin-bottom:8px}
+.choices{display:flex;flex-wrap:wrap;gap:8px}
+.choice{border:1px solid var(--line);background:rgba(255,255,255,.72);border-radius:999px;padding:8px 11px;font-size:12px}
+.choice.on{background:#1d1d1f;color:#fff}
+.plan-result{min-height:100%;display:flex;flex-direction:column;justify-content:space-between}
+.plan-lines{display:grid;gap:12px;margin-top:10px}
+.plan-line{padding:12px 0;border-bottom:1px solid var(--line)}
+.plan-line:last-child{border-bottom:0}
+.plan-line span{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:760}
+.plan-line b{display:block;margin-top:4px;font-size:15px}
+.testimonials{display:flex;gap:12px;overflow:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px;scrollbar-width:none}
+.testimonials::-webkit-scrollbar{display:none}
+.testi{min-width:min(330px,82vw);scroll-snap-align:start;padding:20px;border:1px solid var(--line);background:rgba(255,255,255,.72);border-radius:20px}
+.testi .who{font-size:12px;font-weight:800;margin-bottom:9px}
+.testi p{font-size:14px}
+.profile{position:relative;overflow:hidden;min-height:290px}
+.profile:after{content:"";position:absolute;width:150px;height:150px;border-radius:50%;right:-50px;bottom:-55px;background:rgba(255,255,255,.56)}
+.profile .country{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.profile h3{font-size:28px;margin-top:9px}
+.path{display:grid;gap:9px;margin-top:18px;position:relative;z-index:1}
+.path-row{display:grid;grid-template-columns:92px 1fr;gap:10px;font-size:13px}
+.path-row span{font-weight:760;color:var(--muted)}
+.profile .more{position:relative;z-index:2;margin-top:18px;border:0;border-radius:999px;background:rgba(255,255,255,.75);padding:9px 12px;font-size:12px;font-weight:760}
+.profile-detail{display:none;position:relative;z-index:2;margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:#4d4d53}
+.profile.open .profile-detail{display:block}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 15px}
+.filter{border:0;border-radius:999px;padding:8px 12px;background:rgba(255,255,255,.78);font-size:12px;font-weight:720}
+.filter.on{background:#1d1d1f;color:#fff}
+.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lesson{padding:20px;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.72);transition:opacity .3s ease,transform .3s ease}
+.lesson.hide{display:none}
+.lesson .n{display:inline-grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#1d1d1f;color:#fff;font-size:12px;font-weight:800}
+.lesson h3{font-size:17px;margin:12px 0 6px}
+.lesson p{font-size:13px}
+.lesson .tag{display:inline-block;margin-top:13px;font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:760}
+.zeph{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bigverse{padding:30px}
+.bigverse .ref{font-size:12px;font-weight:800;color:var(--lilac-strong)}
+.bigverse blockquote{font-size:31px;line-height:1.22;letter-spacing:-.035em;margin:16px 0}
+.note-toggle{border:0;border-radius:999px;background:#1d1d1f;color:#fff;padding:9px 12px;font-size:12px;font-weight:760}
+.note-panel{display:none;margin-top:16px;padding:15px;border-radius:15px;background:rgba(255,255,255,.7);font-size:14px;color:#4f4f56}
+.note-panel.show{display:block}
+.aid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+.aid-item{padding:17px;border-radius:18px;background:rgba(255,255,255,.72);border:1px solid var(--line)}
+.aid-item b{display:block;margin-bottom:5px;font-size:14px}.aid-item p{font-size:13px}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}
+.tstep{padding:17px 14px;border-radius:18px;background:rgba(255,255,255,.75);border:1px solid var(--line);min-height:150px}
+.tstep .year{font-size:23px;font-weight:820;letter-spacing:-.03em}
+.tstep p{font-size:12px;margin-top:8px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
+.stat{padding:16px;border-radius:17px;background:rgba(255,255,255,.73);border:1px solid var(--line)}
+.stat b{display:block;font-size:23px;letter-spacing:-.035em}.stat span{font-size:11px;color:var(--muted)}
+.music{display:grid;grid-template-columns:auto 1fr;gap:17px;align-items:center}
+.sparrow{width:76px;height:76px;border-radius:24px;background:#fff;display:grid;place-items:center;font-size:34px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.footer{margin-top:78px;padding:30px 0 10px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.modal{
+  position:fixed;inset:0;z-index:100;display:none;align-items:center;justify-content:center;padding:20px;
+  background:rgba(0,0,0,.36);backdrop-filter:blur(10px);
+}
+.modal.open{display:flex}
+.modalbox{
+  width:min(620px,100%);max-height:min(78vh,720px);overflow:auto;background:#121212;color:#fff;border-radius:26px;
+  padding:26px;box-shadow:0 30px 100px rgba(0,0,0,.38);transform:translateY(8px);animation:pop .25s ease forwards;
+}
+@keyframes pop{to{transform:translateY(0)}}
+.modalhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.modalref{font-size:13px;font-weight:800;letter-spacing:.02em}
+.close{width:34px;height:34px;border-radius:50%;border:0;background:#2a2a2c;color:#fff;font-size:18px}
+.modaltext{font-size:20px;line-height:1.5;letter-spacing:-.012em}
+.modalkind{margin-top:18px;font-size:11px;color:#9c9ca2}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;min-height:auto}.hero-art{min-height:230px}
+  .g3,.matrix{grid-template-columns:repeat(2,1fr)}
+  .flow{grid-template-columns:repeat(2,1fr)}.flow-item:nth-child(2):after{display:none}
+  .planner,.zeph{grid-template-columns:1fr}.timeline{grid-template-columns:repeat(3,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  main{padding:22px 12px 58px}.navwrap{padding:10px 12px}.brand{display:none}
+  .hero{padding:34px 22px;border-radius:28px}.hero-art{min-height:205px}
+  .core{right:60px}.fc1{right:150px}.fc2{right:-4px}.fc3{right:145px}
+  .section{margin-top:58px}.section-head{grid-template-columns:1fr}.time{justify-self:start}
+  .g2,.g3,.matrix,.flow,.flipgrid,.timeline{grid-template-columns:1fr}
+  .flow-item:not(:last-child):after{content:"↓";right:50%;top:auto;bottom:-22px;transform:translateX(50%)}.flow-item:nth-child(2):after{display:block}
+  .card{padding:20px;border-radius:21px}.summary{font-size:16px}
+  .aid{grid-template-columns:1fr}.path-row{grid-template-columns:78px 1fr}
+  .bigverse blockquote{font-size:25px}.modaltext{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="navwrap">
+    <div class="brand">Estudio personal</div>
+    <nav class="navscroll" aria-label="Secciones del programa">
+      <button class="navbtn active" data-target="origen">Origen</button>
+      <button class="navbtn" data-target="familia">Familia espiritual</button>
+      <button class="navbtn" data-target="adoracion">Adoración</button>
+      <button class="navbtn" data-target="jovenes">Tres jóvenes</button>
+      <button class="navbtn" data-target="paz">Paz familiar</button>
+      <button class="navbtn" data-target="tesoros">Sofonías y consuelo</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero reveal">
+  <div>
+    <div class="eyebrow">JW Broadcasting · Estudio del programa</div>
+    <h1>Protejamos nuestra familia</h1>
+    <p>La familia forma parte del propósito de Jehová. El programa conecta su origen, la familia espiritual, la adoración en familia, la fe personal, la reconciliación y el consuelo.</p>
+    <div class="hero-meta">
+      <span class="pill">62 min 42 s</span><span class="pill">6 núcleos de estudio</span><span class="pill">Familia · Fe · Paz</span>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <div class="orbit o1"></div><div class="orbit o2"></div>
+    <div class="core">♡</div>
+    <div class="floatcard fc1">Jehová</div>
+    <div class="floatcard fc2">Familia</div>
+    <div class="floatcard fc3">Congregación</div>
+  </div>
+</section>
+
+<section id="origen" class="section reveal">
+  <div class="section-head">
+    <div><div class="kicker">Sección 1</div><h2>El origen y diseño de la familia</h2></div>
+    <div class="time">01:16–14:01</div>
+  </div>
+  <div class="card summary accent-blue">
+    Jehová preparó la Tierra como hogar para la primera familia humana y la creó dentro de un propósito mayor que ya incluía a su familia celestial. El programa presenta la familia como una institución de origen divino y contrasta ese diseño con fuerzas que la debilitan: conflictos, falta de cariño, presión del mundo y decisiones que apartan de los principios bíblicos. La protección se resume en dos movimientos: escuchar el camino que Jehová indica y andar en él.
+    <div class="scriptures" id="chips-origin"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Hilo del programa</h3>
+    <p style="margin-bottom:16px">Este mapa resume el hilo que sigue la primera parte del programa.</p>
+    <div class="flow">
+      <div class="flow-item"><div class="flow-num">01</div><div class="flow-title">Familia celestial</div><div class="flow-desc">Jehová comparte el regalo de la vida y crea a su Hijo y a millones de hijos espirituales.</div></div>
+      <div class="flow-item"><div class="flow-num">02</div><div class="flow-title">Familia terrenal</div><div class="flow-desc">La Tierra se prepara como hogar y el sexto día concluye con la primera pareja humana.</div></div>
+      <div class="flow-item"><div class="flow-num">03</div><div class="flow-title">Ataques</div><div class="flow-desc">El conflicto, los celos y el espíritu del mundo desgastan relaciones y roban tiempo familiar.</div></div>
+      <div class="flow-item"><div class="flow-num">04</div><div class="flow-title">Protección</div><div class="flow-desc">Confiar en Jehová, escuchar su guía y poner en práctica sus principios.</div></div>
+    </div>
+  </div>
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card accent-mint"><h3>La creación tiene orden</h3><p>Los días creativos muestran una secuencia: luz, separación de aguas, tierra seca, astros visibles, vida marina y aves, animales terrestres y humanidad.</p></div>
+    <div class="card accent-lilac"><h3>La familia refleja un diseño</h3><p>El programa relaciona la familia humana con la organización celestial y destaca el valor que Jehová concede a los vínculos familiares.</p></div>
+    <div class="card accent-amber"><h3>Conocer el camino no basta</h3><p>Isaías 30:21 se presenta con dos ideas inseparables: identificar el camino y caminar por él.</p></div>
+  </div>
+</section>
+
+<section id="familia" class="section reveal">
+  <div class="section-head">
+    <div><div class="kicker">Sección 2</div><h2>La familia espiritual</h2></div>
+    <div class="time">14:02–18:42</div>
+  </div>
+  <div class="grid g2">
+    <div class="card accent-rose">
+      <div class="kicker">Rut y Noemí</div>
+      <p class="quote">“Los siervos de Jehová nos preocupamos unos por otros”.<small>La idea central amplía el concepto de familia más allá de los lazos biológicos.</small></p>
+      <div class="scriptures" id="chips-family"></div>
+    </div>
+    <div class="card">
+      <h3>Una familia que no depende del tamaño</h3>
+      <p>Rut permaneció con Noemí cuando podía haber vuelto a Moab. El programa usa su relación para mostrar que el cariño, la lealtad y el cuidado pueden hacer que incluso una familia muy pequeña reciba apoyo real. Jesús también describe la congregación como una familia para quienes han dejado hogar o familiares por él y por las buenas noticias.</p>
+    </div>
+  </div>
+  <div class="flipgrid">
+    <div class="flip"><button aria-label="Familia espiritual"><div class="flip-inner"><div class="flip-face"><div class="label">Vínculo</div><strong>¿Qué convierte a la congregación en familia?</strong></div><div class="flip-face flip-back"><div class="label">Idea</div><p>El interés genuino, la lealtad, el cuidado y el amor que no dependen de parentesco, edad o afinidad.</p></div></div></button></div>
+    <div class="flip"><button aria-label="Círculos cerrados"><div class="flip-inner"><div class="flip-face"><div class="label">Unidad</div><strong>¿Qué debilita el espíritu de familia?</strong></div><div class="flip-face flip-back"><div class="label">Idea</div><p>Los grupos cerrados, los resentimientos prolongados y permitir que un malentendido defina toda una relación.</p></div></div></button></div>
+    <div class="flip"><button aria-label="Camino del amor"><div class="flip-inner"><div class="flip-face"><div class="label">Modelo</div><strong>¿Qué mantiene unida a la familia espiritual?</strong></div><div class="flip-face flip-back"><div class="label">Idea</div><p>Imitar al Padre y seguir el camino del amor en la manera de tratar a los hermanos.</p></div></div></button></div>
+  </div>
+</section>
+
+<section id="adoracion" class="section reveal">
+  <div class="section-head">
+    <div><div class="kicker">Sección 3</div><h2>Adoración en familia que deje huella</h2></div>
+    <div class="time">18:43–24:50</div>
+  </div>
+  <div class="planner">
+    <div class="card accent-mint">
+      <h3>Planificador semanal</h3>
+      <p>Las sugerencias del video se ordenan alrededor de necesidades, edades, intereses y aplicación.</p>
+      <div class="choice-group"><div class="choice-title">Necesidad espiritual</div><div class="choices" data-plan="need">
+        <button class="choice on">Presión de grupo</button><button class="choice">Concentración</button><button class="choice">Predicación</button><button class="choice">Comunicación</button>
+      </div></div>
+      <div class="choice-group"><div class="choice-title">Formato</div><div class="choices" data-plan="format">
+        <button class="choice on">Conversación</button><button class="choice">Video pausado</button><button class="choice">Juego de rol</button><button class="choice">Proyecto visual</button>
+      </div></div>
+      <div class="choice-group"><div class="choice-title">Aplicación</div><div class="choices" data-plan="apply">
+        <button class="choice on">Una idea para la semana</button><button class="choice">Una pregunta personal</button><button class="choice">Una práctica de ministerio</button>
+      </div></div>
+      <div class="scriptures" id="chips-worship"></div>
+    </div>
+    <div class="card plan-result">
+      <div><div class="kicker">Plan resultante</div><h3 style="font-size:25px;margin-top:8px">Una sesión con propósito</h3></div>
+      <div class="plan-lines">
+        <div class="plan-line"><span>Necesidad</span><b id="plan-need">Presión de grupo</b></div>
+        <div class="plan-line"><span>Formato</span><b id="plan-format">Conversación</b></div>
+        <div class="plan-line"><span>Aplicación</span><b id="plan-apply">Una idea para la semana</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>Recuerdos que explican el método</h3>
+    <div class="testimonials" style="margin-top:14px">
+      <div class="testi"><div class="who">Deborah Peterkin · Nueva York</div><p>Su padre llevaba a la familia a contemplar las estrellas y usaba el universo para que sus hijos percibieran mejor la personalidad de Jehová.</p></div>
+      <div class="testi"><div class="who">Sandra Brown · Connecticut</div><p>La oración quedó asociada en su mente con la inmensidad del universo; además recuerda cuánto se reían juntos durante la adoración.</p></div>
+      <div class="testi"><div class="who">Cyrus Cutrer · Nueva York</div><p>Las conversaciones relajadas y los juegos para practicar situaciones difíciles le ayudaron a expresarse y a sentirse más cerca de Jehová.</p></div>
+      <div class="testi"><div class="who">Jackie García · Nueva Jersey</div><p>Adaptó los temas a edades y formas de aprender diferentes. La emoción de su hijo Zion por conocer mejor a Jesús mostró el efecto de un formato bien elegido.</p></div>
+      <div class="testi"><div class="who">Rubén Fontanez · Pensilvania</div><p>Al pausar los videos y preguntar por la aplicación, la familia evita quedarse solo con el contenido visto y busca convertirlo en acción.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="jovenes" class="section reveal">
+  <div class="section-head">
+    <div><div class="kicker">Sección 4</div><h2>Tres jóvenes y una fe personal</h2></div>
+    <div class="time">24:51–30:26</div>
+  </div>
+  <div class="grid g3">
+    <article class="card profile accent-blue">
+      <div class="country">Kenia</div><h3>Sarah</h3>
+      <div class="path">
+        <div class="path-row"><span>Reto</span><div>Timidez, dificultad para hablar y sensación de soledad.</div></div>
+        <div class="path-row"><span>Giro</span><div>Vio a Jehová como el Padre que enseña y guía por el propio bien.</div></div>
+        <div class="path-row"><span>Resultado</span><div>Más lectura bíblica, reuniones, bautismo y amistades.</div></div>
+      </div>
+      <button class="more">Núcleo de la experiencia</button>
+      <div class="profile-detail">Un video de <em>La pizarra animada</em> le llegó en un momento de tristeza y reforzó la sensación de que Jehová entendía lo que estaba pasando.</div>
+      <div class="scriptures" data-chips="sarah"></div>
+    </article>
+    <article class="card profile accent-mint">
+      <div class="country">Etiopía</div><h3>Abenezer</h3>
+      <div class="path">
+        <div class="path-row"><span>Reto</span><div>Presión para estudiar en el extranjero y temor a arrepentirse.</div></div>
+        <div class="path-row"><span>Giro</span><div>El relato de José cambió la medida de lo que significa “ir bien”.</div></div>
+        <div class="path-row"><span>Resultado</span><div>Aprendió un oficio, se bautizó y llegó a ser precursor regular.</div></div>
+      </div>
+      <button class="more">Núcleo de la experiencia</button>
+      <div class="profile-detail">Génesis 39:2 lo ayudó a separar prestigio académico de aprobación divina: José prosperó porque Jehová estaba con él.</div>
+      <div class="scriptures" data-chips="abenezer"></div>
+    </article>
+    <article class="card profile accent-lilac">
+      <div class="country">Kenia</div><h3>Sophie</h3>
+      <div class="path">
+        <div class="path-row"><span>Reto</span><div>Resentimiento y casi 5 años de estancamiento espiritual.</div></div>
+        <div class="path-row"><span>Giro</span><div>Comprendió el amor leal de Jehová como Padre compasivo.</div></div>
+        <div class="path-row"><span>Resultado</span><div>Volvió a orar, se hizo publicadora y avanzó hacia el bautismo.</div></div>
+      </div>
+      <button class="more">Núcleo de la experiencia</button>
+      <div class="profile-detail">Antes de volver a hablar con los ancianos, oró para poder verlos como Jehová los ve. Ese cambio interior precedió a su progreso.</div>
+      <div class="scriptures" data-chips="sophie"></div>
+    </article>
+  </div>
+</section>
+
+<section id="paz" class="section reveal">
+  <div class="section-head">
+    <div><div class="kicker">Sección 5</div><h2>Cómo cultivar la paz en la familia</h2></div>
+    <div class="time">30:27–40:35</div>
+  </div>
+  <div class="card accent-amber summary">
+    Jacob conoció problemas familiares intensos durante muchos años. El discurso de Gary Breaux extrae seis lecciones de su encuentro con Esaú y evita convertir el relato en una comparación simple de “yo soy Jacob y el otro es Esaú”. La atención se pone en lo que cada persona sí puede hacer para abrir una posibilidad de reconciliación.
+    <div class="scriptures" id="chips-peace"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <div class="filters">
+      <button class="filter on" data-filter="all">Todas</button>
+      <button class="filter" data-filter="tiempo">Tiempo</button>
+      <button class="filter" data-filter="espiritual">Espiritual</button>
+      <button class="filter" data-filter="actitud">Actitud</button>
+      <button class="filter" data-filter="accion">Acción</button>
+    </div>
+    <div class="matrix">
+      <div class="lesson" data-cat="tiempo"><span class="n">1</span><h3>Dar tiempo</h3><p>Los ánimos pueden necesitar tiempo. La paz no se puede forzar y la confianza puede reconstruirse con pequeños pasos regulares.</p><span class="tag">Tiempo</span></div>
+      <div class="lesson" data-cat="espiritual"><span class="n">2</span><h3>Centrarse en la voluntad de Jehová</h3><p>Durante los años de distancia, Jacob siguió cumpliendo el propósito que Jehová tenía para él.</p><span class="tag">Espiritual</span></div>
+      <div class="lesson" data-cat="espiritual accion"><span class="n">3</span><h3>Buscar la guía de Jehová</h3><p>Jacob oró, esperó el momento debido y luego tomó la iniciativa para acercarse a Esaú.</p><span class="tag">Espiritual · Acción</span></div>
+      <div class="lesson" data-cat="actitud"><span class="n">4</span><h3>Mostrar respeto</h3><p>No presentó a Esaú como “el malo”. Lo trató con respeto y no alimentó una visión negativa dentro de la familia.</p><span class="tag">Actitud</span></div>
+      <div class="lesson" data-cat="actitud accion"><span class="n">5</span><h3>Dejar atrás el pasado</h3><p>Jacob se humilló, mostró que venía en son de paz y no volvió a abrir la herida durante el encuentro.</p><span class="tag">Actitud · Acción</span></div>
+      <div class="lesson" data-cat="actitud"><span class="n">6</span><h3>No exigir una disculpa</h3><p>La Biblia no dice que Esaú pidiera perdón. El restablecimiento de la comunicación ya fue una señal valiosa.</p><span class="tag">Actitud</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="tesoros" class="section reveal">
+  <div class="section-head">
+    <div><div class="kicker">Sección 6</div><h2>Sofonías, consuelo y el valor de cada siervo</h2></div>
+    <div class="time">40:36–62:42</div>
+  </div>
+  <div class="zeph">
+    <div class="card bigverse accent-lilac">
+      <div class="ref">Sofonías 3:17</div>
+      <blockquote>“Se alegrará por ti y se sentirá muy feliz. Se quedará en silencio debido a su amor”.</blockquote>
+      <button class="note-toggle">Nota de estudio</button>
+      <div class="note-panel">La dramatización consulta la nota y recoge tres matices: “tranquilo, en paz, satisfecho”. El punto del programa es que la expresión muestra la profundidad de lo que Jehová siente por quienes lo buscan y se mantienen fieles.</div>
+      <div class="scriptures" id="chips-zeph"></div>
+    </div>
+    <div class="card">
+      <h3>Descubrir más tesoros</h3>
+      <p>El estudio sobre Sofonías presenta tres recursos: la Guía de estudio, las notas y la búsqueda de detalles sobre la personalidad de Jehová. El objetivo no es acumular datos, sino fortalecer una amistad personal con él. Esa idea se aplica a quienes se sienten invisibles o creen que nunca hacen suficiente.</p>
+      <div class="grid g3" style="margin-top:16px">
+        <div class="aid-item"><b>Guía de estudio</b><p>Ayuda a ampliar el contexto y localizar publicaciones relacionadas.</p></div>
+        <div class="aid-item"><b>Notas</b><p>Aclaran expresiones que abren matices del texto bíblico.</p></div>
+        <div class="aid-item"><b>Personalidad</b><p>Conecta la investigación con lo que Jehová piensa y siente.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card accent-blue" style="margin-top:16px">
+    <h3>Consuelo ante la pérdida</h3>
+    <p>Jugraj, Harman y Brianne describen confusión, enojo, impotencia, culpa y tristeza. Sus experiencias no presentan el dolor como algo que desaparece por fuerza de voluntad; destacan la oración abierta, la meditación, la esperanza de la resurrección, la rutina espiritual y el apoyo de la congregación.</p>
+    <div class="aid">
+      <div class="aid-item"><b>Orar</b><p>Hablar con Jehová con franqueza y expresar lo que realmente se siente.</p></div>
+      <div class="aid-item"><b>Meditar</b><p>Volver a las promesas bíblicas sobre la muerte y la resurrección.</p></div>
+      <div class="aid-item"><b>Imaginar la esperanza</b><p>Pensar en el reencuentro futuro como una forma de hacer más real la promesa.</p></div>
+      <div class="aid-item"><b>Abrirse</b><p>Permitir que hermanos que han pasado por pérdidas acompañen el proceso.</p></div>
+      <div class="aid-item"><b>Mantener la rutina</b><p>Reuniones, predicación y adoración en familia dieron estructura en medio del duelo.</p></div>
+      <div class="aid-item"><b>Aceptar la emoción</b><p>Brianne aprendió que sentirse sin fuerzas no equivale a haber perdido la fe.</p></div>
+    </div>
+    <div class="scriptures" id="chips-grief"></div>
+  </div>
+
+  <div class="card accent-mint" style="margin-top:16px">
+    <div class="music">
+      <div class="sparrow">♩</div>
+      <div><div class="kicker">Video musical</div><h3 style="margin-top:4px">Tú vales más que los gorriones</h3><p>La canción refuerza una idea que recorre todo el programa: Jehová ve el esfuerzo, la lealtad, la obediencia y el amor de sus siervos, incluso cuando la edad o las circunstancias reducen lo que pueden hacer.</p></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="kicker">Videopostal · Chipre</div><h3 style="font-size:28px;margin-top:7px">Una obra que empezó de forma humilde</h3>
+    <p>La postal final combina paisaje, cultura e historia de la predicación. Desde un maletín de publicaciones en 1924 hasta una obra multilingüe actual, el relato destaca continuidad pese a encarcelamientos, torturas y desplazamientos causados por el conflicto de 1974.</p>
+    <div class="timeline">
+      <div class="tstep"><div class="year">1924</div><p>Cyrus Charalambous regresa de Estados Unidos y envía publicaciones desde Nicosia.</p></div>
+      <div class="tstep"><div class="year">1930s</div><p>Se forma la primera congregación en Xylophagou.</p></div>
+      <div class="tstep"><div class="year">1947</div><p>Llega Antonios Karandinos, misionero graduado de Galaad.</p></div>
+      <div class="tstep"><div class="year">1974</div><p>Unos 300 hermanos dejan sus hogares por la guerra y reciben ayuda internacional.</p></div>
+      <div class="tstep"><div class="year">Hoy</div><p>La predicación continúa en varias lenguas y Pafos conserva un vínculo directo con el relato de Pablo y Bernabé.</p></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>3 200+</b><span>publicadores en Chipre</span></div>
+      <div class="stat"><b>39</b><span>congregaciones</span></div>
+      <div class="stat"><b>14</b><span>grupos</span></div>
+      <div class="stat"><b>14</b><span>idiomas</span></div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <span>Estudio personal · Síntesis basada en la transcripción del programa</span>
+  <span>Diseño responsivo · modo claro</span>
+</footer>
+</main>
+
+<div class="modal" id="verseModal" role="dialog" aria-modal="true" aria-labelledby="modalRef">
+  <div class="modalbox">
+    <div class="modalhead"><div class="modalref" id="modalRef"></div><button class="close" aria-label="Cerrar">×</button></div>
+    <div class="modaltext" id="modalText"></div>
+    <div class="modalkind" id="modalKind"></div>
+  </div>
+</div>
+
+<script>
+const verses = {
+  "1 Timoteo 4:1": {text:"La palabra inspirada dice claramente que, en tiempos futuros, algunos se apartarán de la fe al prestar atención a mensajes inspirados que engañan y a enseñanzas de demonios.", literal:true},
+  "Colosenses 1:16": {text:"Por medio de él todo lo demás fue creado en los cielos y en la tierra, las cosas visibles y las cosas invisibles, ya sean tronos, dominios, gobiernos o autoridades.", literal:true},
+  "Génesis 1:27": {text:"Así que Dios pasó a crear al ser humano a su imagen. A la imagen de Dios lo creó. Hombre y mujer los creó.", literal:true},
+  "Génesis 1:31": {text:"Después de eso, Dios vio todo lo que había hecho y, ¡miren!, todo era muy bueno. Y hubo tarde y hubo mañana. Ese fue el sexto día.", literal:true},
+  "Isaías 54:5": {text:"Y es que tu Gran Creador es como tu esposo —su nombre es Jehová de los ejércitos—.", literal:true},
+  "Efesios 3:14, 15": {text:"Por esa razón me arrodillo ante el Padre, a quien toda familia en el cielo y en la tierra le debe su nombre.", literal:true},
+  "Santiago 3:14-16": {text:"Pero, si ustedes tienen amargos celos y un espíritu conflictivo en el corazón, no anden alardeando ni mintiendo contra la verdad. Esta no es la sabiduría que viene de arriba; es terrenal, animal, demoníaca. Porque, donde hay celos y un espíritu conflictivo, también habrá desorden y todo tipo de cosas malas.", literal:true},
+  "Proverbios 3:5-7": {text:"Confía en Jehová con todo tu corazón y no te apoyes en tu propio entendimiento. Tómalo en cuenta en todos tus caminos, y él hará rectas tus sendas. No te vuelvas sabio a tus propios ojos; teme a Jehová y aléjate del mal.", literal:true},
+  "Isaías 30:21": {text:"Y, en caso de que te desvíes a la derecha o a la izquierda, oirás con tus propios oídos estas palabras detrás de ti: ‘Este es el camino. Anda en él’.", literal:true},
+  "Marcos 10:29, 30": {text:"Les aseguro que no hay nadie que haya dejado hogar, hermanos, hermanas, madre, padre, hijos [...] por mí y por las buenas noticias que no reciba ahora, en este tiempo, 100 veces más —[...] hermanos, hermanas, madres, hijos—.", literal:true},
+  "Marcos 3:35": {text:"Todo el que hace la voluntad de Dios es mi hermano y mi hermana y mi madre.", literal:true},
+  "Efesios 5:1, 2": {text:"El programa lo relaciona con imitar a nuestro Padre como hijos amados y seguir el camino del amor.", literal:false},
+  "Proverbios 15:22": {text:"Con muchos consejeros se consiguen buenos resultados.", literal:true},
+  "Salmo 103:11": {text:"Porque, tan alto como está el cielo sobre la tierra, así de inmenso es su amor leal por los que le temen.", literal:true},
+  "Isaías 48:17": {text:"Yo, Jehová, soy tu Dios, el que te enseña por tu propio bien, el que te guía por el camino en que debes andar.", literal:true},
+  "Génesis 39:2": {text:"Pero Jehová estaba con José. Así que le fue bien.", literal:true},
+  "Génesis 47:9": {text:"Llevo 130 años yendo y viniendo. Pero noten: han sido años muy difíciles.", literal:true},
+  "Génesis 31:3": {text:"El programa explica que Jehová le dijo a Jacob que regresara a la tierra de sus padres y a donde estaban sus parientes.", literal:false},
+  "Génesis 32:3-5": {text:"Entonces Jacob le envió mensajeros a su hermano, a su hermano Esaú, que estaba en la tierra de Seír, el territorio de Edom, y les dio esta orden: ‘Díganle esto a mi señor, Esaú: Tu siervo Jacob ha dicho: He estado viviendo con Labán todo este tiempo y he conseguido toros, burros y ovejas, así como siervos y siervas. Te envío este mensaje, mi señor, para darte la noticia y así ganarme tu favor’.", literal:true},
+  "Génesis 33:4": {text:"Pero Esaú fue corriendo a su encuentro, lo abrazó y lo besó, y los dos se echaron a llorar.", literal:true},
+  "Proverbios 18:19": {text:"Un hermano ofendido es más inaccesible que una ciudad fortificada, y hay pleitos que son como las barras de una fortaleza.", literal:true},
+  "Romanos 12:18": {text:"Si es posible, hasta donde dependa de ustedes, vivan en paz con todos.", literal:true},
+  "Sofonías 2:3": {text:"Busquen a Jehová todos ustedes, los mansos de la tierra.", literal:true},
+  "Sofonías 3:17": {text:"Se alegrará por ti y se sentirá muy feliz. Se quedará en silencio debido a su amor.", literal:true},
+  "Romanos 12:15": {text:"Alégrense con los que se alegran; lloren con los que lloran.", literal:true},
+  "Santiago 1:13": {text:"Jugraj menciona este texto porque le ayuda a recordar que el dolor, el sufrimiento y la muerte no vienen de Jehová.", literal:false},
+  "Juan 3:16": {text:"Brianne recuerda este texto al pensar que Jehová entregó a su Hijo unigénito por ella.", literal:false},
+  "Apocalipsis 21:4": {text:"Brianne lo relaciona con la esperanza de volver a ver a sus seres queridos cuando Jehová cumpla sus promesas.", literal:false},
+  "Salmo 34:18": {text:"Jehová está cerca de los que tienen el corazón destrozado.", literal:true},
+  "Mateo 10": {text:"Se venden dos gorriones por una moneda de poco valor, ¿no es cierto? Sin embargo, ni uno de ellos cae a tierra sin que su Padre lo sepa.", literal:true}
+};
+const groups = {
+  origin:["1 Timoteo 4:1","Colosenses 1:16","Génesis 1:27","Génesis 1:31","Isaías 54:5","Efesios 3:14, 15","Santiago 3:14-16","Proverbios 3:5-7","Isaías 30:21"],
+  family:["Marcos 10:29, 30","Marcos 3:35","Efesios 5:1, 2"],
+  worship:["Proverbios 15:22"],
+  sarah:["Isaías 48:17"],
+  abenezer:["Génesis 39:2"],
+  sophie:["Salmo 103:11"],
+  peace:["Génesis 47:9","Génesis 31:3","Génesis 32:3-5","Génesis 33:4","Proverbios 18:19","Romanos 12:18"],
+  zeph:["Sofonías 2:3","Sofonías 3:17"],
+  grief:["Romanos 12:15","Santiago 1:13","Juan 3:16","Apocalipsis 21:4","Salmo 34:18","Mateo 10"]
+};
+function makeChip(ref){
+  const b=document.createElement("button"); b.className="verse-chip"; b.textContent=ref;
+  b.addEventListener("click",()=>openVerse(ref)); return b;
+}
+function fill(id,arr){const el=document.getElementById(id); if(el) arr.forEach(r=>el.appendChild(makeChip(r)));}
+fill("chips-origin",groups.origin); fill("chips-family",groups.family); fill("chips-worship",groups.worship);
+fill("chips-peace",groups.peace); fill("chips-zeph",groups.zeph); fill("chips-grief",groups.grief);
+document.querySelectorAll("[data-chips]").forEach(el=>groups[el.dataset.chips].forEach(r=>el.appendChild(makeChip(r))));
+const modal=document.getElementById("verseModal");
+function openVerse(ref){
+  const v=verses[ref]; document.getElementById("modalRef").textContent=ref; document.getElementById("modalText").textContent=v.text;
+  document.getElementById("modalKind").textContent=v.literal?"Texto leído literalmente en la transcripción":"Referencia mencionada en el programa · síntesis de la transcripción";
+  modal.classList.add("open"); document.body.style.overflow="hidden";
+}
+function closeModal(){modal.classList.remove("open");document.body.style.overflow=""}
+document.querySelector(".close").addEventListener("click",closeModal);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+document.querySelectorAll(".navbtn").forEach(b=>b.addEventListener("click",()=>document.getElementById(b.dataset.target).scrollIntoView({behavior:"smooth"})));
+const sections=[...document.querySelectorAll(".section")], navs=[...document.querySelectorAll(".navbtn")];
+const sectionObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){navs.forEach(n=>n.classList.toggle("active",n.dataset.target===e.target.id));}}),{rootMargin:"-25% 0px -65% 0px",threshold:0});
+sections.forEach(s=>sectionObserver.observe(s));
+document.querySelectorAll(".flip").forEach(f=>f.querySelector("button").addEventListener("click",()=>f.classList.toggle("is-flipped")));
+document.querySelectorAll(".choices").forEach(group=>group.querySelectorAll(".choice").forEach(btn=>btn.addEventListener("click",()=>{
+  group.querySelectorAll(".choice").forEach(x=>x.classList.remove("on"));btn.classList.add("on");
+  document.getElementById("plan-"+group.dataset.plan).textContent=btn.textContent;
+})));
+document.querySelectorAll(".profile .more").forEach(b=>b.addEventListener("click",()=>b.closest(".profile").classList.toggle("open")));
+document.querySelectorAll(".filter").forEach(f=>f.addEventListener("click",()=>{
+  document.querySelectorAll(".filter").forEach(x=>x.classList.remove("on")); f.classList.add("on");
+  const val=f.dataset.filter; document.querySelectorAll(".lesson").forEach(l=>l.classList.toggle("hide",val!=="all"&&!l.dataset.cat.split(" ").includes(val)));
+}));
+document.querySelector(".note-toggle").addEventListener("click",()=>document.querySelector(".note-panel").classList.toggle("show"));
+const revealObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");revealObserver.unobserve(e.target)}}),{threshold:.08});
+document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+</script>
+</body>
+</html>
